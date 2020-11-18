@@ -1,5 +1,5 @@
 ![Frapper](https://github.com/saineshwar/Frapper/blob/main/Frapper.png)
-https://github.com/saineshwar/Frapper/blob/main/2frapper.png
+
 # Frapper- Quick Guide for Rapid Application Development in ASP.NET Core 
 
 Frapper is completed project template with all features which are commonly used in projects.
