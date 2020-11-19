@@ -6,7 +6,12 @@ Frapper is completed project template with all features which are commonly used 
 
 It Will help you learn and implement these features in Live Project's
 
-## Contents 
+![Welcome to Frapper](https://github.com/saineshwar/Frapper/blob/main/2frapper.png)
+
+## Give a Star ⭐️
+If you find project really helpful in Quick Learning do give it a star. 
+
+## Feature Overview 
 * Custom UserManagement 
 * Configure Menus by Roles
 * Ordering Menus
@@ -94,8 +99,21 @@ It Will help you learn and implement these features in Live Project's
 * Username: demouser
 * Password: UFrapper@987
 
+## Support
+Support This Project to keep it active.
+<a href="https://www.buymeacoffee.com/f8lkgf5" rel="nofollow"><img src="https://camo.githubusercontent.com/3ba8042b343d12b84b85d2e6563376af4150f9cd09e72428349c1656083c8b5a/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f64656661756c742d6f72616e67652e706e67" alt="Buy Me A Coffee" 
+width="200" data-canonical-src="https://cdn.buymeacoffee.com/buttons/default-orange.png" style="max-width:100%;"></a>
+
+## About the Author
+**Saineshwar Bageri**
+* Blogs [https://tutexchange.com/](Blogs)
+* Facebook Page [https://www.facebook.com/CodewithSai](FacebookPage)
+* Facebook [https://www.facebook.com/saineshwar.bageri](Facebook)
+* Twitter [https://twitter.com/saihacksoft](Twitter)
+* Linkedin [https://www.linkedin.com/in/saineshwar-bageri-mvp-35200440](Linkedin)
+
 ## License
 Released under the [MIT LICENSE](https://github.com/saineshwar/Frapper/blob/add-license-1/LICENSE)
 
-![Welcome to Frapper](https://github.com/saineshwar/Frapper/blob/main/2frapper.png)
+
 
