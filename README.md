@@ -45,6 +45,7 @@ If you find project really helpful in Quick Learning do give it a star.
 * Upload Files to store in a folder
 * Upload Files to store in Database
 
+
 ## Technologies
 * ASP.NET Core 3.1
 * Entity Framework Core 3.1
@@ -99,6 +100,12 @@ If you find project really helpful in Quick Learning do give it a star.
 * Make Changes in ConnectionStrings, ApplicationSettings, Exceptional, RedisServer in appsettings.json file
 * Build project which will restore all NuGet Packages
 * Final Step Run Project
+
+## Supporting Documentation
+
+Project Overview [https://tutexchange.com/frapper-quick-guide-for-rapid-application-development-in-asp-net-core/](ProjectOverview)
+SuperAdmin Screens [https://tutexchange.com/frapper-quick-guide-on-superadmin-module/](SuperAdmin-Screens)
+User Screens [https://tutexchange.com/frapper-quick-guide-on-user-module/](User-Screens)
 
 ## Credential
 
