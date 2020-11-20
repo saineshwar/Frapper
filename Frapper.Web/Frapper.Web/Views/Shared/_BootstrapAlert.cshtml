@@ -1,0 +1,100 @@
+﻿@using Frapper.Web.Helpers
+@using Frapper.Web.Messages
+@using Newtonsoft.Json
+@using System.Text.Encodings.Web
+@{
+    var successMessages = new List<string>();
+    var errorMessages = new List<string>();
+    var warningMessages = new List<string>();
+
+    //Get messages from TempData
+    var notes = TempData.ContainsKey(NotificationService.NotificationListKey)
+        ? JsonConvert.DeserializeObject<IList<NotificationData>>(TempData[NotificationService.NotificationListKey].ToString() ?? string.Empty)
+        : null;
+
+    if (notes != null)
+    {
+        foreach (var note in notes)
+        {
+            if (note.Type == NotificationType.success)
+            {
+                <script>
+                    $(document).ready(function () {
+                        displayToastsSuccessNotifications('@Html.Raw(note.AlertTitle)','@Html.Raw(note.Message)');
+                    });
+                </script>
+            }
+            if (note.Type == NotificationType.warning)
+            {
+                <script>
+                    $(document).ready(function () {
+                        displayToastsWarningNotifications('@Html.Raw(note.AlertTitle)','@Html.Raw(note.Message)');
+                    });
+                </script>
+            }
+            if (note.Type == NotificationType.info)
+            {
+                <script>
+                    $(document).ready(function () {
+                        displayToastsInformationNotifications('@Html.Raw(note.AlertTitle)','@Html.Raw(note.Message)');
+                    });
+                </script>
+            }
+
+            if (note.Type == NotificationType.danger)
+            {
+                <script>
+                    $(document).ready(function () {
+                        displayToastsDangerNotifications('@Html.Raw(note.AlertTitle)','@Html.Raw(note.Message)');
+                    });
+                </script>
+            }
+        }
+    }
+}
+
+<script type="text/javascript">
+
+    function displayToastsSuccessNotifications(titlevalue, bodyvalue) {
+
+        $(document).Toasts('create',
+            {
+                class: 'bg-success',
+                body: bodyvalue,
+                title: titlevalue,
+                icon: 'fas fa-envelope fa-lg'
+            });
+    }
+    function displayToastsWarningNotifications(titlevalue, bodyvalue) {
+
+        $(document).Toasts('create',
+            {
+                class: 'bg-warning',
+                body: bodyvalue,
+                title: titlevalue,
+                icon: 'fas fa-envelope fa-lg'
+            });
+    }
+    function displayToastsInformationNotifications(titlevalue, bodyvalue) {
+
+        $(document).Toasts('create',
+            {
+                class: 'bg-info',
+                body: bodyvalue,
+                title: titlevalue,
+                icon: 'fas fa-envelope fa-lg'
+            });
+    }
+
+
+    function displayToastsDangerNotifications(titlevalue, bodyvalue) {
+
+        $(document).Toasts('create',
+            {
+                class: 'bg-danger',
+                body: bodyvalue,
+                title: titlevalue,
+                icon: 'fas fa-envelope fa-lg'
+            });
+    }
+</script>

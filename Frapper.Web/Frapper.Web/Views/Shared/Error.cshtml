@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "ForgotPassword";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Forgot Password</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .errorx-page {
+            -ms-flex-align: center;
+            align-items: center;
+            background: #e9ecef;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            height: 100vh;
+            -ms-flex-pack: center;
+            justify-content: center;
+            margin-top: 20%;
+        }
+    </style>
+</head>
+<body class="hold-transition errorx-page">
+
+    @if (ViewBag.ErrorId == "404")
+    {
+        <section class="content align-content-center">
+            <div class="error-page">
+                <h2 class="headline text-warning">404</h2>
+                <div class="error-content">
+                    <h3><i class="fas fa-exclamation-triangle text-danger"></i> Oops! Something went wrong.</h3>
+                    <p>
+                        We will work on fixing that right away.
+                        Meanwhile, you may <a href="/Portal/Login">return to Portal Login</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    }
+    else if (ViewBag.ErrorId == "500")
+    {
+        <section class="content align-content-center">
+            <div class="error-page">
+                <h2 class="headline text-danger">500</h2>
+                <div class="error-content">
+                    <h3><i class="fas fa-exclamation-triangle text-danger"></i>  Oops! Page not found.</h3>
+                    <p>
+                        We will work on fixing that right away.
+                        Meanwhile, you may <a href="/Portal/Login">return to Portal Login</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="content align-content-center">
+            <div class="error-page">
+                <h2 class="headline text-danger">500</h2>
+                <div class="error-content">
+                    <h3><i class="fas fa-exclamation-triangle text-danger"></i> Oops! Something went wrong.</h3>
+                    <p>
+                        We will work on fixing that right away.
+                        Meanwhile, you may <a href="/Portal/Login">return to Portal Login</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    }
+
+
+    <!-- /.login-box -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/adminlte.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+
+</body>
+</html>
+
+

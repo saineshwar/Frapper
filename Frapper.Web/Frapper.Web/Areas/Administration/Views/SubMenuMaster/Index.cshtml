@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.PageName = "SubMenu";
+}
+
+@await Html.PartialAsync("~/Views/Shared/_DatatablesCss.cshtml")
+
+
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">All</h3>
+        </div>
+        <div class="card-body">
+            <table id="SubMenuDataTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>SubMenuId</th>
+                        <th>SubMenuName</th>
+                        <th>Area</th>
+                        <th>ControllerName</th>
+                        <th>ActionMethod</th>
+                        <th>MenuName</th>
+                        <th>RoleName</th>
+                        <th>MenuCategory</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@await Html.PartialAsync("~/Views/Shared/_DatatablesScripts.cshtml")
+@Html.Hidden("item-to-delete", "", new { @id = "item-to-delete" })
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#SubMenuDataTable").DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/Administration/SubMenuMaster/GridAllSubMenu",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    },
+                        {
+                        "targets": [2],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [3],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [4],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [5],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [6],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [7],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [8],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [9],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [10],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false
+                    }
+
+
+
+                    ],
+                "columns": [
+                    { "data": "SubMenuId", "name": "SubMenuId", "autoWidth": true },
+                    { "data": "SubMenuName", "name": "SubMenuName", "autoWidth": true },
+                    { "data": "Area", "name": "Area", "autoWidth": true },
+                    { "data": "ControllerName", "name": "ControllerName", "autoWidth": true },
+                    { "data": "ActionMethod", "name": "ActionMethod", "autoWidth": true },
+                    { "data": "MenuName", "name": "MenuName", "autoWidth": true },
+                    { "data": "RoleName", "name": "RoleName", "autoWidth": true },
+                    { "data": "MenuCategoryName", "name": "MenuCategoryName", "autoWidth": true },
+                    { "data": "Status", "name": "Status", "autoWidth": true },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return '<a class="btn btn-primary" href="/Administration/SubMenuMaster/Edit/' + full.SubMenuId + '">Edit</a>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return ' <button type="button" class="btn btn-danger" onclick="Delete(' + full.SubMenuId + ');"> Delete </button>';
+                        }
+                    }
+                ]
+
+            });
+        });
+
+        function Delete(subMenuId) {
+            $.confirm({
+                title: 'Delete!',
+                content: 'Do you want to Delete SubMenu !',
+                buttons: {
+                    confirm: function () {
+                        $.ajax({
+                            url: "/Administration/SubMenuMaster/DeleteSubMenu",
+                            type: "POST",
+                            data: { SubMenuId: subMenuId },
+                            success: function (data, textStatus, xhr)
+                            {
+                                if (data.Result == "success")
+                                {
+                                    location.reload();
+                                }
+                                if (data.Result == "failed")
+                                {
+                                    $.alert('Something Went Wrong');
+                                }
+                            },
+                            error: function (xhr, status, err) {
+                                if (xhr.status == 401) {
+                                    alert('Error');
+                                    window.location.href = "/Portal/Logout";
+                                }
+                                if (xhr.status == 500) {
+                                    alert('Error');
+                                    window.location.href = "/Portal/Logout";
+                                }
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    }
+                }
+            });
+        }
+
+
+    </script>
+
+
+}
+

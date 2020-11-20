@@ -1,0 +1,70 @@
+﻿@model Frapper.ViewModel.Usermaster.EditUserViewModel
+@{
+    ViewBag.PageName = "User";
+}
+
+<form asp-controller="User" asp-antiforgery="true" asp-action="Edit" method="post">
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Edit</h3>
+        </div>
+        <div class="card-body register-card-body">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <input asp-for="UserId" type="hidden" />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" placeholder="Enter FullName" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" placeholder="Enter LastName" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="LastName"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="EmailId"></label>
+                    <input asp-for="EmailId" placeholder="Enter EmailId" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="EmailId"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <br/>
+                    <label asp-for="Gender"></label>
+                    <input type="radio" asp-for="Gender" value="M"/> <label>Male</label>
+                    <input type="radio" asp-for="Gender" value="F"/> <label>Female</label>
+                    <br/>
+                    <span class="text-danger" asp-validation-for="Gender"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="MobileNo"></label>
+                    <input asp-for="MobileNo" placeholder="Enter MobileNo" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="MobileNo"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" readonly = "readonly" placeholder="Enter UserName" type="text" class="form-control"/>
+                    <span class="text-danger" asp-validation-for="UserName"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="RoleId"></label>
+                    <select asp-for="RoleId" class="form-control"
+                            asp-items="@(new SelectList(Model.ListRole, "Value", "Text"))">
+                    </select>
+                    
+                    <span class="text-danger" asp-validation-for="RoleId"></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success" id="btnsubmit" name="btnsubmit" type="submit"> Submit</button>
+            <a asp-area="Administration" class="btn btn-primary" asp-controller="User" asp-action="Index">Cancel</a>
+        </div>
+    </div>
+</form>
+
+

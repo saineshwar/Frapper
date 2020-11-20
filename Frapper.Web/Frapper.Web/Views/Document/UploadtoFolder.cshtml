@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.PageName = "Document";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="col-md-6">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Upload to Folder</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-controller="Document" enctype="multipart/form-data"  asp-antiforgery="true" asp-action="UploadtoFolder" method="post">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Upload File</label>
+                    <input class="form-control" name="files" multiple="multiple" type="file" />
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+﻿@model Frapper.ViewModel.Login.ResetPasswordViewModel
+@{
+    ViewData["Title"] = "Reset";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Recover Password</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+@if (TempData["Reset_Error_Message"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Message!</strong> @TempData["Reset_Error_Message"]
+    </div>
+}
+<div class="login-box">
+    <div class="login-logo">
+        <img height="50px" src="~/img/Frapper.png"/>
+        <b>Frapper</b>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
+
+            <form id="account" asp-controller="ResetPassword" asp-antiforgery="true" asp-action="Reset" method="post">
+                <div class="input-group mb-3">
+                    <input asp-for="Password" autocomplete="new-password" type="password" class="form-control" placeholder="Password"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="input-group mb-3">
+                    <input asp-for="ConfirmPassword" autocomplete="new-password" type="password" class="form-control" placeholder="Confirm Password"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" id="btnsubmit" class="btn btn-primary btn-block">Change password</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <p class="mt-3 mb-1">
+                <a asp-controller="Portal" asp-action="Login">Login</a>
+            </p>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+<!-- /.login-box -->
+<!-- jQuery -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/js/adminlte.min.js"></script>
+
+</body>
+</html>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/scripts/sha512.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnsubmit").click(function () {
+            if ($('#Password').val() != "" && $('#ConfirmPassword').val() != "") {
+                if (validatePassword($('#Password').val()) == false) {
+                    alert('New Password Must Have Minimum 7 characters at least 1 Alphabet, 1 Number and 1 Special Character !');
+                    return false;
+                } else {
+                    var password = $('#Password').val();
+                    var passwordhash = sha512(password);
+
+                    var confirmpassword = $('#ConfirmPassword').val();
+                    var confirmpasswordhash = sha512(confirmpassword);
+
+                    $('#Password').val(passwordhash);
+                    $('#ConfirmPassword').val(confirmpasswordhash);
+                    $("#Resetform").submit();
+                }
+            }
+        });
+
+        $("#Password").blur(function (event)
+        {
+            if ($('#Password').val() != "")
+            {
+                if (validatePassword($("#Password").val()) == false)
+                {
+                    alert('New Password Must Have Minimum 7 characters at least 1 Alphabet, 1 Number and 1 Special Character !');
+                    $("#Password").val('');
+                }
+
+                var data = $("#Password").val().length;
+                if (data > 20)
+                {
+                    alert('Maximum 20 character password is Allowed!');
+                    $("#Password").val('');
+                }
+            }
+        });
+
+    });
+
+    function validatePassword(password) {
+        var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@@$!%*#?&])[A-Za-z\d$@@$!%*#?&]{7,}$/;
+        if (reg.test(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+</script>
+

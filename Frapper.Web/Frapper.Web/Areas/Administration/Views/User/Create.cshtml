@@ -1,0 +1,142 @@
+﻿@model Frapper.ViewModel.Usermaster.CreateUserViewModel
+@{
+    ViewBag.PageName = "User";
+}
+<link href="~/css/siteloader.css" rel="stylesheet" />
+<form asp-controller="User" asp-antiforgery="true" name = "Userform", id = "Userform" asp-action="Create" method="post">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Add</h3>
+        </div>
+        <div class="card-body register-card-body">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" placeholder="Enter FullName" class="form-control" />
+                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" placeholder="Enter LastName" class="form-control" />
+                    <span class="text-danger" asp-validation-for="LastName"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="EmailId"></label>
+                    <input asp-for="EmailId" placeholder="Enter EmailId" class="form-control" />
+                    <span class="text-danger" asp-validation-for="EmailId"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <br />
+                    <label asp-for="Gender"></label>
+                    <input type="radio" asp-for="Gender" value="M" /> <label>Male</label>
+                    <input type="radio" asp-for="Gender" value="F" /> <label>Female</label>
+                    <br />
+                    <span class="text-danger" asp-validation-for="Gender"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="MobileNo"></label>
+                    <input asp-for="MobileNo" placeholder="Enter MobileNo" class="form-control" />
+                    <span class="text-danger" asp-validation-for="MobileNo"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" placeholder="Enter UserName" type="text" class="form-control" />
+                    <span class="text-danger" asp-validation-for="UserName"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="Password"></label>
+                    <input type="password" asp-for="Password" placeholder="Enter Password" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Password"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input type="password" asp-for="ConfirmPassword" placeholder="Enter Confirm Password" class="form-control" />
+                    <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="RoleId"></label>
+                    <select asp-for="RoleId" class="form-control"
+                            asp-items="@(new SelectList(Model.ListRole, "Value", "Text"))">
+                    </select>
+                    <span class="text-danger" asp-validation-for="RoleId"></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success" id="btnsubmit" name="btnsubmit" type="submit"> Save</button>
+            
+            <a asp-area="Administration" class="btn btn-danger" asp-controller="User" asp-action="Create">Clear</a>
+            <a asp-area="Administration" class="btn btn-primary" asp-controller="User" asp-action="Index">List</a>
+        </div>
+    </div>
+</form>
+
+@section scripts
+{
+    <script src="~/scripts/sha512.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $("#divProcessing").hide();
+
+            $("#btnsubmit").click(function() {
+                if ($('#Userform').valid())
+                {
+
+                    if ($('#Password').val() != "" && $('#ConfirmPassword').val() != "") {
+                        if (validatePassword($('#Password').val()) == false) {
+                            alert('New Password Must Have Minimum 7 characters at least 1 Alphabet, 1 Number and 1 Special Character !');
+                            return false;
+                        } else {
+                            var password = $('#Password').val();
+                            var passwordhash = sha512(password);
+
+                            var confirmpassword = $('#ConfirmPassword').val();
+                            var confirmpasswordhash = sha512(confirmpassword);
+
+                            $('#Password').val(passwordhash);
+                            $('#ConfirmPassword').val(confirmpasswordhash);
+                            $("#divProcessing").show();
+                            $("#Userform").submit();
+                            
+                        }
+                    }
+                }
+            });
+
+            $("#Password").blur(function(event) {
+                if ($('#Password').val() != "") {
+                    if (validatePassword($("#Password").val()) == false) {
+                        alert('New Password Must Have Minimum 7 characters at least 1 Alphabet, 1 Number and 1 Special Character !');
+                        $("#Password").val('');
+                    }
+
+                    var data = $("#Password").val().length;
+                    if (data > 20) {
+                        alert('Maximum 20 character password is Allowed!');
+                        $("#Password").val('');
+                    }
+                }
+            });
+
+        });
+
+        function validatePassword(password) {
+            var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@@$!%*#?&])[A-Za-z\d$@@$!%*#?&]{7,}$/;
+            if (reg.test(password)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+    </script>
+}
+
+

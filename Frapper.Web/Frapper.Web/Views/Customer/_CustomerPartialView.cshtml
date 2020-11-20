@@ -1,0 +1,256 @@
+﻿
+@model Frapper.ViewModel.Customers.CustomersViewModel
+
+
+
+    <form asp-controller="Customer" id="customerform" asp-antiforgery="true" asp-action="Create" method="post">
+        <div class="card-body register-card-body">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" maxlength="100" oncopy="return false" , onpaste="return false" placeholder="Enter FirstName" class="form-control" />
+                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" maxlength="100" oncopy="return false" , onpaste="return false" placeholder="Enter LastName" class="form-control" />
+                    <span class="text-danger" asp-validation-for="LastName"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="EmailId"></label>
+                    <input asp-for="EmailId" maxlength="100" oncopy="return false" , onpaste="return false" placeholder="Enter EmailId" class="form-control" />
+                    <span class="text-danger" asp-validation-for="EmailId"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="MobileNo"></label>
+                    <input asp-for="MobileNo" maxlength="10" oncopy="return false" , onpaste="return false" placeholder="Enter MobileNo" class="form-control" />
+                    <span class="text-danger" asp-validation-for="MobileNo"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="LandlineNo"></label>
+                    <input asp-for="LandlineNo" maxlength="10" oncopy="return false" , onpaste="return false" placeholder="Enter LandlineNo" class="form-control" />
+                    <span class="text-danger" asp-validation-for="LandlineNo"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="State"></label>
+                    <input asp-for="State" maxlength="50" oncopy="return false" , onpaste="return false" placeholder="Enter State" class="form-control" />
+                    <span class="text-danger" asp-validation-for="State"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" maxlength="50" oncopy="return false" , onpaste="return false" placeholder="Enter City" class="form-control" />
+                    <span class="text-danger" asp-validation-for="City"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Street"></label>
+                    <input asp-for="Street" maxlength="50" oncopy="return false" , onpaste="return false" placeholder="Enter Street" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Street"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="Pincode"></label>
+                    <input asp-for="Pincode" maxlength="6" oncopy="return false" , onpaste="return false" placeholder="Enter Pincode" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Pincode"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                </div>
+                </div>
+        </div>
+        <!-- /.card-body -->
+    </form>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $.validator.addMethod("MobileOnly", function (value, element) {
+                if ($("#MobileNo").val() != "") {
+                    var reg = /^[7-9][0-9]{9}$/;
+                    if (reg.test($("#MobileNo").val())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            $("#customerform").validate({
+                rules: {
+                    FirstName:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                    LastName:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                    MobileNo: {
+                        required: true,
+                        MobileOnly: true,
+                        minlength: 10,
+                        maxlength: 10,
+                        number: true
+                    },
+
+                    LandlineNo: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10,
+                        number: true
+                    },
+
+                    EmailId: {
+                        required: true,
+                        email: true
+                    },
+                    Street:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                    City:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                    State:
+                    {
+                        required: true,
+                        maxlength: 50
+                    },
+                    Pincode:
+                    {
+                        required: true,
+                        maxlength: 6
+                    }
+                },
+                messages: {
+                    FirstName: {
+                        required: "Please enter FirstName",
+                        maxlength: "InValid FirstName"
+                    },
+                    LastName: {
+                        required: "Please enter  LastName",
+                        maxlength: "InValid FirstName"
+                    },
+                    MobileNo: {
+                        required: "Please enter Mobile",
+                        MobileOnly: "Mobile no Must Start with 7,8,9",
+                        minlength: "InValid Mobile no",
+                        maxlength: "InValid Mobile no",
+                        number: "Must be Number"
+                    },
+                    LandlineNo: {
+                        required: "Please enter LandlineNo",
+                        minlength: "InValid Landline no",
+                        maxlength: "InValid Landline no",
+                        number: "Must be Number"
+                    },
+                    EmailId: {
+                        required: "Please enter EmailId",
+                        email: "Please enter a valid email"
+                    },
+                    Street: {
+                        required: "Please enter Street",
+                        maxlength: "InValid Street"
+                    },
+                    City: {
+                        required: "Please enter City",
+                        maxlength: "InValid City"
+                    },
+                    State: {
+                        required: "Please enter State",
+                        maxlength: "InValid State"
+                    },
+                    Pincode: {
+                        required: "Please enter Pincode",
+                        maxlength: "InValid Pincode"
+                    },
+                },
+                errorElement: "span",
+                errorPlacement: function (error, element) {
+                    // Add the `help-block` class to the error element
+                    error.addClass("text-danger field-validation-error");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+                }
+            });
+
+
+        });
+
+        $.validator.setDefaults({
+            submitHandler: function () {
+
+                var dataType = 'application/x-www-form-urlencoded; charset=utf-8';
+                var data = $('#customerform').serialize();
+
+                $.confirm({
+                    title: "Confirmation",
+                    type: "green",
+                    content: "Do you Want to Submit this Form?",
+                    buttons:
+                    {
+                        confirm: function () {
+                            if ($("#customerform").valid()) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Customer/Create",
+                                    dataType: 'json',
+                                    contentType: dataType,
+                                    data: data,
+                                    success: function (data, textStatus) {
+                                        if (data.Result == "success") {
+                                            window.location.href = "/Customer/Index";
+                                        }
+                                        if (data.Result == "failed") {
+                                            $.alert('Something Went Wrong Please Try After Sometime.');
+                                        }
+
+                                    },
+                                    error: function (xhr, status, err) {
+                                        if (xhr.status == 401) {
+                                            alert('Error');
+                                            window.location.href = "/Portal/Logout";
+                                        }
+
+                                        if (xhr.status == 500) {
+                                            alert('Error');
+                                            window.location.href = "/Portal/Logout";
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        cancel: function () {
+                            $.alert("Submission canceled !");
+
+                        }
+                    }
+                });
+
+            }
+        });
+    </script>
+
+

@@ -1,0 +1,228 @@
+﻿@model Frapper.ViewModel.Menus.EditSubMenuMasterViewModel
+@{
+    ViewBag.PageName = "SubMenu";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Edit</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-controller="SubMenuMaster" asp-antiforgery="true" asp-action="Edit" method="post">
+
+            <div class="card-body register-card-body">
+                <input asp-for="SubMenuId" type="hidden"/>
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="RoleId"></label>
+                        <select asp-for="RoleId" class="form-control"
+                                asp-items="@(new SelectList(Model.ListofRoles, "Value", "Text"))">
+                        </select>
+                        <span class="text-danger" asp-validation-for="RoleId"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="MenuCategoryId"></label>
+                        <select asp-for="MenuCategoryId" class="form-control"
+                                asp-items="@(new SelectList(Model.ListofMenuCategory, "Value", "Text"))">
+                        </select>
+                        <span class="text-danger" asp-validation-for="MenuCategoryId"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="MenuId"></label>
+                        <select asp-for="MenuId" class="form-control"
+                                asp-items="@(new SelectList(Model.ListofMenus, "Value", "Text"))">
+                        </select>
+                        <span class="text-danger" asp-validation-for="MenuCategoryId"></span>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Area"></label>
+                        <input asp-for="Area" placeholder="Enter Area" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="Area"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="ControllerName"></label>
+                        <input asp-for="ControllerName" placeholder="Enter Controller Name" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="ControllerName"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="ActionMethod"></label>
+                        <input asp-for="ActionMethod" placeholder="Enter Action Method" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="ActionMethod"></span>
+                    </div>
+
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="SubMenuName"></label>
+                        <input asp-for="SubMenuName" placeholder="Enter SubMenu Name" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="SubMenuName"></span>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" asp-for="Status" class="form-check-input"/>
+                        <label class="form-check-label" asp-for="Status">Active</label>
+                        <span class="text-danger" asp-validation-for="Status"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a asp-area="Administration" class="btn btn-primary" asp-controller="SubMenuMaster" asp-action="Index">List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            $("#RoleId").change(function() {
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Administration/MenuMaster/GetCategory",
+                    data: { RoleId: $("#RoleId").val()},
+                    dataType: "json",
+                    success: function(data, textStatus, xhr) {
+                        $("#MenuCategoryId").empty();
+                        $.each(data,
+                            function(i) {
+                                var optionhtml = '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                                $("#MenuCategoryId").append(optionhtml);
+                            });
+                    },
+                    error: function(xhr, status, err) {
+                        if (xhr.status == 401) {
+                            alert('Error');
+                            window.location.href = "/Portal/Logout";
+                        }
+
+                        if (xhr.status == 500) {
+                            alert('Error');
+                            window.location.href = "/Portal/Logout";
+                        }
+                    }
+                });
+            });
+
+            $("#MenuCategoryId").change(function() {
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Administration/SubMenuMaster/GetMenus",
+                    data: {
+                        roleId: $("#RoleId").val(),
+                        CategoryID: $("#MenuCategoryId").val()
+                    },
+                    dataType: "json",
+                    success: function(data, textStatus, xhr) {
+                        $("#MenuId").empty();
+                        $.each(data,
+                            function(i) {
+                                var optionhtml = '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                                $("#MenuId").append(optionhtml);
+                            });
+                    },
+                    error: function(xhr, status, err) {
+                        if (xhr.status == 401) {
+                            alert('Error');
+                            window.location.href = "/Portal/Logout";
+                        }
+
+                        if (xhr.status == 500) {
+                            alert('Error');
+                            window.location.href = "/Portal/Logout";
+                        }
+                    }
+                });
+            });
+        });
+
+        if ('@Model.RoleId' != '' && '@Model.RoleId' != '0') {
+
+            $.ajax({
+                type: "POST",
+                url: "/Administration/MenuMaster/GetCategory",
+                data: { roleId: '@Model.RoleId' },
+                dataType: "json",
+                success: function(data, textStatus, xhr) {
+                    $("#MenuCategoryId").empty();
+
+                    $.each(data,
+                        function(i) {
+                            var optionhtml = '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                            $("#MenuCategoryId").append(optionhtml);
+                        });
+
+                    if ('@Model.MenuCategoryId' != '' && '@Model.MenuCategoryId' != '0') {
+                        $("#MenuCategoryId").val('@Model.MenuCategoryId');
+                    }
+                },
+                error: function(xhr, status, err) {
+                    if (xhr.status == 401) {
+                        alert('Error');
+                        window.location.href = "/Portal/Logout";
+                    }
+
+                    if (xhr.status == 500) {
+                        alert('Error');
+                        window.location.href = "/Portal/Logout";
+                    }
+                }
+            });
+        };
+
+
+        if ('@Model.RoleId' != '' && '@Model.RoleId' != '0' && '@Model.MenuCategoryId' != '' && '@Model.MenuCategoryId' != '0') {
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Administration/SubMenuMaster/GetMenus",
+                data: {  roleId: '@Model.RoleId',
+                    CategoryID: '@Model.MenuCategoryId'},
+                dataType: "json",
+                success: function(data, textStatus, xhr) {
+                    $("#MenuId").empty();
+
+                    $.each(data,
+                        function(i) {
+                            var optionhtml = '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                            $("#MenuId").append(optionhtml);
+                        });
+
+                    if ('@Model.MenuId' != '' && '@Model.MenuId' != '0') {
+                        $("#MenuId").val('@Model.MenuId');
+                    }
+                },
+                error: function(xhr, status, err) {
+                    if (xhr.status == 401) {
+                        alert('Error');
+                        window.location.href = "/Portal/Logout";
+                    }
+
+                    if (xhr.status == 500) {
+                        alert('Error');
+                        window.location.href = "/Portal/Logout";
+                    }
+                }
+            });
+        }
+
+
+    </script>
+}

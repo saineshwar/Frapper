@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.PageName = "Document";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+@await Html.PartialAsync("~/Views/Shared/_DatatablesCss.cshtml")
+
+
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">All Documents</h3>
+        </div>
+        <div class="card-body">
+            <table id="MenuCategoryDataTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>DocumentId</th>
+                        <th>Name</th>
+                        <th>CreatedOn</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@await Html.PartialAsync("~/Views/Shared/_DatatablesScripts.cshtml")
+@Html.Hidden("item-to-delete", "", new { @id = "item-to-delete" })
+
+@section scripts{
+
+    <script src="~/plugins/moment/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#MenuCategoryDataTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": "/Document/GridAllDocuments",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }, {
+                        "targets": [2],
+                        "orderable": false,
+                        "searchable": false
+                    }, {
+                        "targets": [3],
+                        "orderable": false,
+                        "searchable": false
+                    }
+                ],
+                "columns": [
+                    { "data": "DocumentId", "name": "DocumentId", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return moment(full.CreatedOn).format("YYYY-MM-DD HH:mm:ss");
+                        }
+                    },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return '<a class="btn btn-primary" href="/Document/Download?documentId=' + full.DocumentId + '"> <i class="fas fa-download"></i> Download</a>';
+                        }
+                    }
+                ]
+            });
+
+
+
+        });
+
+        function Delete(menuCategoryId) {
+            $.confirm({
+                title: 'Delete!',
+                content: 'Do you want to Delete Menu Category!',
+                buttons: {
+                    confirm: function () {
+                        $.ajax({
+                            url: "/Administration/MenuCategory/DeleteMenuCategory",
+                            type: "POST",
+                            data: { MenuCategoryId: menuCategoryId },
+                            success: function (data, textStatus, xhr) {
+                                if (data.Result == "success") {
+                                    location.reload();
+                                }
+                                if (data.Result == "failed") {
+                                    $.alert('Something Went Wrong');
+                                }
+                            },
+                            error: function (xhr, status, err) {
+                                if (xhr.status == 401) {
+                                    alert('Error');
+                                    window.location.href = "/Portal/Logout";
+                                }
+                                if (xhr.status == 500) {
+                                    alert('Error');
+                                    window.location.href = "/Portal/Logout";
+                                }
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    }
+                }
+            });
+        }
+
+
+    </script>
+
+
+}
+
+

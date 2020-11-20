@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Frapper.Common
+@model Frapper.ViewModel.Usermaster.EditUserProfileViewModel
+@{
+    ViewBag.PageName = "Profile";
+    Layout = "_LayoutUser";
+}
+
+
+
+<div class="row">
+    <div class="col-md-3">
+
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    @if (!string.IsNullOrEmpty(ViewBag.UserProfileimagepath))
+                    {
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="@ViewBag.UserProfileimagepath"
+                             alt="User profile picture">
+                    }
+                    else
+                    {
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="/img/user.png"
+                             alt="User profile picture">
+                    }
+
+                </div>
+
+                @if (!string.IsNullOrEmpty(Convert.ToString(Context.Session.GetString(AllSessionKeys.UserName))))
+                {
+                    <h3 class="profile-username text-center">@Convert.ToString(Context.Session.GetString(AllSessionKeys.UserName))</h3>
+                }
+
+                @if (!string.IsNullOrEmpty(Convert.ToString(Context.Session.GetString(AllSessionKeys.RoleName))))
+                {
+                    <p class="text-muted text-center">@Convert.ToString(Context.Session.GetString(AllSessionKeys.RoleName))</p>
+                }
+
+
+
+
+                <a class="btn btn-primary btn-block" asp-area="" asp-controller="UserProfile"
+                   asp-action="Upload"><b>Upload</b></a>
+
+                <a class="btn btn-primary btn-block" asp-area="" asp-controller="UserProfile"
+                   asp-action="Capture"><b>Capture</b></a>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item active"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="settings">
+                        @if (Model != null)
+                        {
+                            @await Html.PartialAsync("~/Views/UserProfile/EditUserProfile.cshtml", Model)
+                        }
+
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>

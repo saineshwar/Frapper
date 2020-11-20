@@ -1,0 +1,102 @@
+﻿@model Frapper.ViewModel.Reports.ExportReportViewModel
+@{
+    ViewBag.PageName = "Report";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+<form asp-controller="Report" asp-antiforgery="true" asp-action="Export" method="post">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Export</h3>
+        </div>
+        <div class="card-body register-card-body">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="form-row">
+
+                <div class="form-group col-md-3">
+                    <label asp-for="ReportsId"></label>
+                    <select asp-for="ReportsId" class="form-control"
+                            asp-items="@(new SelectList(Model.ListofReports, "Value", "Text"))">
+                    </select>
+                    <span class="text-danger" asp-validation-for="ReportTypeId"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="ReportTypeId"></label>
+                    <select asp-for="ReportTypeId" class="form-control"
+                            asp-items="@(new SelectList(Model.ListofReportType, "Value", "Text"))">
+                    </select>
+                    <span class="text-danger" asp-validation-for="ReportTypeId"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Fromdate"></label>
+                    <input asp-for="Fromdate" placeholder="Select Fromdate" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Fromdate"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Todate"></label>
+                    <input asp-for="Todate" placeholder="Select Todate" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Todate"></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success" id="btnsubmit" name="btnsubmit" type="submit"> <b><i class="fas fa-download"></i> Download Report</b></button>
+            <a asp-area="Administration" class="btn btn-primary" asp-controller="Report" asp-action="Export">
+                <b>
+                    <i class="fas fa-redo" aria-hidden="true">
+                        Clear
+                    </i>
+                </b>
+            </a>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts
+{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dot-luv/jquery-ui.min.css" rel="stylesheet" />
+
+    
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#Todate').prop('disabled', true);
+            $("#Fromdate").datepicker
+                ({
+                    dateFormat: "yy-mm-dd",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    changeYear: true,
+                    yearRange: new Date().getFullYear() + ':' + new Date().getFullYear(),
+                    onSelect: function (date) {
+                        $('#Todate').prop('disabled', false);
+                        var dt2 = $('#Todate');
+                        var startDate = $(this).datepicker('getDate');
+                        var minDate = $(this).datepicker('getDate');
+                        dt2.datepicker('setDate', minDate);
+                        startDate.setDate(startDate.getDate() + 180);
+                        //sets dt2 maxDate to the last day of 30 days window
+                        dt2.datepicker('option', 'maxDate', startDate);
+                        dt2.datepicker('option', 'minDate', minDate);
+                        $(this).datepicker('option', 'minDate', minDate);
+                    }
+                });
+        });
+        $(document).ready(function () {
+            $("#Todate").datepicker
+                ({
+                    dateFormat: "yy-mm-dd",
+                    changeMonth: true,
+                    changeYear: true,
+                    numberOfMonths: 1,
+                    yearRange: new Date().getFullYear() + ':' + new Date().getFullYear(),
+                    onSelect: function (date) {
+                    }
+                });
+        });
+    </script>
+}

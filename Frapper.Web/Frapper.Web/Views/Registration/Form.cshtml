@@ -1,0 +1,181 @@
+﻿@model Frapper.ViewModel.Registration.RegistrationViewModel
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Registration Page</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link href="~/css/adminlte.css" rel="stylesheet" />
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+
+
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <img height="50px" src="~/img/Frapper.png" />
+            <b>Frapper</b>
+        </div>
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Register a new membership</p>
+                
+                @if (TempData["Registered_Error_Message"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Message!</strong> @TempData["Registered_Error_Message"]
+                    </div>
+                }
+
+                @if (TempData["Registered_Success_Message"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Message!</strong> @TempData["Registered_Success_Message"]
+                    </div>
+                }
+
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                <form asp-controller="Registration" asp-antiforgery="true" asp-action="Form" method="post">
+                    <div class="form-group mb-3">
+                        <input asp-for="UserName" placeholder="Enter UserName" autocomplete="new-password" type="text" class="form-control" />
+                        <span class="text-danger" asp-validation-for="UserName"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input asp-for="EmailId" placeholder="Enter EmailId" class="form-control" />
+                        <span class="text-danger" asp-validation-for="EmailId"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input asp-for="MobileNo" placeholder="Enter MobileNo" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MobileNo"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="password" asp-for="Password" autocomplete="new-password" placeholder="Enter Password" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="password" asp-for="ConfirmPassword" placeholder="Enter Confirm Password" class="form-control" />
+                        <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                    <div class="form-group mb-3">
+
+                        <dnt-captcha asp-captcha-generator-max="999999"
+                                     asp-captcha-generator-min="111111"
+                                     asp-captcha-generator-language="English"
+                                     asp-captcha-generator-display-mode="ShowDigits"
+                                     asp-use-relative-urls="true"
+                                     asp-placeholder="Security code as a number"
+                                     asp-validation-error-message="Please enter the security code."
+                                     asp-font-name="Tahoma"
+                                     asp-font-size="20"
+                                     asp-fore-color="#333333"
+                                     asp-back-color="#ccc"
+                                     asp-text-box-class="text-box form-control"
+                                     asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                     asp-validation-message-class="text-danger"
+                                     asp-refresh-button-class="fas fa-redo btn-sm"
+                                     asp-use-noise="false" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                                <label for="agreeTerms">
+                                    I agree to the <a href="#">terms</a>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button id="btnsubmit" type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <a asp-controller="Portal" asp-action="Login">I already have a membership</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/js/adminlte.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/scripts/sha512.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnsubmit").click(function () {
+                if ($('#Password').val() != "" && $('#ConfirmPassword').val() != "") {
+                    if (validatePassword($('#Password').val()) == false) {
+                        alert('New Password Must Have Minimum 7 characters at least 1 Alphabet, 1 Number and 1 Special Character !');
+                        return false;
+                    }
+                    else {
+                        var password = $('#Password').val();
+                        var passwordhash = sha512(password);
+
+                        var confirmpassword = $('#ConfirmPassword').val();
+                        var confirmpasswordhash = sha512(confirmpassword);
+
+                        $('#Password').val(passwordhash);
+                        $('#ConfirmPassword').val(confirmpasswordhash);
+                        $("#Userform").submit();
+                    }
+                }
+            });
+
+            $("#Password").blur(function (event) {
+                if ($('#Password').val() != "") {
+                    if (validatePassword($("#Password").val()) == false) {
+                        alert('New Password Must Have Minimum 7 characters at least 1 Alphabet, 1 Number and 1 Special Character !');
+                        $("#Password").val('');
+                    }
+
+                    var data = $("#Password").val().length;
+                    if (data > 20) {
+                        alert('Maximum 20 character password is Allowed!');
+                        $("#Password").val('');
+                    }
+                }
+            });
+        });
+
+        function validatePassword(password) {
+            var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@@$!%*#?&])[A-Za-z\d$@@$!%*#?&]{7,}$/;
+            if (reg.test(password)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>

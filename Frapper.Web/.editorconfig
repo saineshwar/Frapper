@@ -1,0 +1,16 @@
+﻿[*.cs]
+
+# CS0168: Variable is declared but never used
+dotnet_diagnostic.CS0168.severity = none
+
+# IDE0037: Use inferred member name
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:none
+
+# IDE0037: Use inferred member name
+dotnet_style_prefer_inferred_tuple_names = true:none
+
+# IDE0044: Add readonly modifier
+dotnet_style_readonly_field = true:none
+
+# IDE0060: Remove unused parameter
+dotnet_code_quality_unused_parameters = all:none

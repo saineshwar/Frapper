@@ -1,0 +1,38 @@
+﻿@model Frapper.ViewModel.Rolemasters.EditRoleMasterViewModel
+@using Frapper.Web.Helpers
+@using Frapper.Web.Messages
+@{
+    ViewBag.PageName = "Role";
+}
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Edit</h3>
+        </div>
+
+
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-controller="RoleMaster" asp-antiforgery="true" asp-action="Edit" method="post">
+            <input asp-for="RoleId" type="hidden" />
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="RoleName"></label>
+                    <input asp-for="RoleName" placeholder="Enter FullName" class="form-control" />
+                    <span class="text-danger" asp-validation-for="RoleName"></span>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" asp-for="Status" class="form-check-input" />
+                    <label class="form-check-label" asp-for="Status">Active</label>
+                    <span class="text-danger" asp-validation-for="Status"></span>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">Update</button>
+                <a asp-area="Administration" class="btn btn-primary" asp-controller="RoleMaster" asp-action="Index">List</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@using Frapper.Web.Helpers
+@using Microsoft.AspNetCore.Http
+
+@{
+    @if (!string.IsNullOrEmpty(Convert.ToString(Context.Session.GetInt32("Portal.RoleId"))))
+    {
+        if (Context.Session.GetInt32("Portal.RoleId") == Convert.ToInt32(RolesHelper.Roles.SuperAdmin))
+        {
+            Layout = "_LayoutMain";
+        }
+        else if (Context.Session.GetInt32("Portal.RoleId") == Convert.ToInt32(RolesHelper.Roles.User))
+        {
+            Layout = "_layoutUser";
+        }
+        
+    }
+}

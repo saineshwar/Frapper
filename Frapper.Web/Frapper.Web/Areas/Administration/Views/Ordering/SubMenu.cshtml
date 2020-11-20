@@ -1,0 +1,238 @@
+﻿
+@{
+    ViewBag.PageName = "SubMenu";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <form asp-controller="Ordering" asp-area="Administration" asp-antiforgery="true" id="myForm" name="myForm" asp-action="SubMenu" method="post">
+            <div class="card-header">
+                <h3 class="card-title">Ordering</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <select class="form-control" name="DropdownRoles" id="DropdownRoles"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select class="form-control" name="DropdownMenuCategory" id="DropdownMenuCategory"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select class="form-control" name="DropdownMenu" id="DropdownMenu"></select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <div id="MenuContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="form-row">
+                    <button class="btn btn-success mr-1" onclick="SaveOrder()" value="GetCustomers" type="button"> Save Order</button>
+                    <a asp-area="Administration" class="btn btn-primary" asp-controller="Ordering" asp-action="SubMenu">Clear</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dot-luv/jquery-ui.min.css" rel="stylesheet"/>
+
+
+    <script>
+        var url = "/Administration/Ordering/GetAllRoles";
+        $.getJSON(url, function (data) {
+            if (data) {
+                $("#DropdownRoles").empty();
+                $("#DropdownMenuCategory").append("<option text='---Select---' value=''> ---Select Menu Category--- </option>");
+                $("#DropdownMenu").append("<option text='---Select---' value=''> ---Select Main Menu--- </option>");
+
+                $.each(data, function (index, optionData) {
+                    $("#DropdownRoles").append("<option text='" + optionData.Text + "' value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                });
+            }
+        });
+
+
+
+        $(document).ready(function () {
+
+            $("#DropdownRoles").change(function () {
+                if ($("#DropdownRoles").val() != "") {
+                    var url = "/Administration/Ordering/GetCategorybyRoleId";
+                    var tempobject = { roleId: $("#DropdownRoles").val() };
+
+                    $.getJSON(url, tempobject, function (data) {
+                        if (data) {
+                            $("#DropdownMenuCategory").empty();
+                            $.each(data, function (index, optionData) {
+                                $("#DropdownMenuCategory").append("<option text='" + optionData.Text + "' value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                            });
+                        }
+                    });
+                    $("#MenuContainer").empty();
+                } else {
+
+                    $("#MenuContainer").empty();
+                }
+
+            });
+
+            $("#DropdownMenuCategory").change(function () {
+                if ($("#DropdownMenuCategory").val() != "") {
+                    var url = "/Administration/Ordering/GetAllMenubyRoleIdSelectListItem";
+                    var tempobject = { roleId: $("#DropdownRoles").val(), menuCategoryId: $("#DropdownMenuCategory").val() };
+
+                    $.getJSON(url, tempobject, function (data) {
+                        if (data) {
+                            $("#DropdownMenu").empty();
+                            $.each(data, function (index, optionData) {
+                                $("#DropdownMenu").append("<option text='" + optionData.Text + "' value='" + optionData.Value + "'>" + optionData.Text + "</option>");
+                            });
+                        }
+                    });
+                    $("#MenuContainer").empty();
+                } else {
+
+                    $("#MenuContainer").empty();
+                }
+
+            });
+
+
+        });
+
+
+        $(document).ready(function () {
+            $("#DropdownMenu").change(function () {
+                if ($("#DropdownRoles").val() != "" && $("#DropdownMenu").val() != "") {
+                    
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Administration/Ordering/GetAllSubMenubyRoleId",
+                        dataType: "json",
+                        data:  {
+                            roleId: $("#DropdownRoles").val(),
+                            MenuId: $("#DropdownMenu").val()
+                        },
+                        success: function (data, textStatus, xhr) {
+                            if (data.length != 0) {
+                                var datacollection = '<table id="tblMenu" class="table table-striped table-bordered">';
+                                datacollection += "<tr><th>SubMenuName</th></tr>";
+
+                                $.each(data,
+                                    function (index, optionData) {
+                                        datacollection += "<tr><td><i class='fa fa-arrows-v' style='font-size: 18px; color: #50C878'></i>   " + optionData.SubMenuName + "<input type='hidden' name='hiddenmenuname' class='h_v' value=" + optionData.SubMenuId + " /></td></tr>";
+                                    });
+                                datacollection += '</table>';
+                                $("#MenuContainer").html(datacollection);
+
+                                $("#tblMenu").sortable({
+                                    items: 'tr:not(tr:first-child)',
+                                    cursor: 'pointer',
+                                    axis: 'y',
+                                    dropOnEmpty: false,
+                                    start: function (e, ui) {
+                                        ui.item.addClass("selected");
+                                    },
+                                    stop: function (e, ui) {
+                                        ui.item.removeClass("selected");
+                                    },
+                                    receive: function (e, ui) {
+                                        $(this).find("tbody").append(ui.item);
+                                    }
+                                });
+                            }
+
+
+                        },
+                        error: function (xhr, status, err) {
+                            if (xhr.status == 400) {
+                                DisplayModelStateErrors(xhr.responseJSON.ModelState);
+                            }
+                        }
+                    });
+                } else {
+
+                    $("#MenuContainer").empty();
+                }
+            });
+        });
+
+
+        function SaveOrder() {
+            if ($("#DropdownRoles").val() == "") {
+                alert("Select Role");
+            }
+            else if ($("#DropdownMenu").val() == "") {
+                alert("Select Main Menu");
+            }
+            else {
+                var form = document.getElementById("myForm"),
+                    inputs = form.getElementsByTagName("input"),
+                    arr = [];
+
+                for (var i = 0, len = inputs.length; i < len; i++) {
+                    if (inputs[i].type === "hidden") {
+                        arr.push(inputs[i].value);
+                    }
+                }
+
+                if (inputs.length > 0) {
+                    var jsonObject =
+                    {
+                        RoleId: $("#DropdownRoles").val(),
+                        MenuId: $("#DropdownMenu").val(),
+                        SelectedOrder: arr
+                    };
+
+                    $.ajax({
+                        type: "POST", //HTTP POST Method
+                        url: "/Administration/Ordering/SubMenu",
+                        data: jsonObject,
+                        success: function (data) {
+                            if (data.status == "Success") {
+                                window.location.reload();
+                            }
+                            else {
+                                alert('Order Saved Successfully');
+                                window.location.reload();
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert("No Data To Save");
+                }
+            }
+
+
+        }
+
+        function DisplayModelStateErrors(modelState) {
+            var message = "";
+            var propStrings = Object.keys(modelState);
+
+            $.each(propStrings, function (i, propString) {
+                var propErrors = modelState[propString];
+                $.each(propErrors, function (j, propError) {
+                    message += propError;
+                });
+                message += "\n";
+            });
+
+            alert(message);
+        };
+
+    </script>
+}

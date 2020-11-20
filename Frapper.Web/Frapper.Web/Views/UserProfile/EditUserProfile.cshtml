@@ -1,0 +1,50 @@
+﻿@model Frapper.ViewModel.Usermaster.EditUserProfileViewModel
+
+<form class="form-horizontal" asp-controller="UserProfile" asp-antiforgery="true" asp-action="MyProfile" method="post">
+   
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <input asp-for="UserId" type="hidden" />
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="FirstName"></label>
+        <div class="col-sm-10">
+            <input asp-for="FirstName" placeholder="Enter FirstName" class="form-control"/>
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="LastName"></label>
+        <div class="col-sm-10">
+            <input asp-for="LastName" placeholder="Enter LastName" class="form-control"/>
+            <span class="text-danger" asp-validation-for="LastName"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="EmailId"></label>
+        <div class="col-sm-10">
+            <input asp-for="EmailId" placeholder="Enter EmailId" class="form-control"/>
+            <span class="text-danger" asp-validation-for="EmailId"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="MobileNo"></label>
+        <div class="col-sm-10">
+            <input asp-for="MobileNo" placeholder="Enter MobileNo" class="form-control"/>
+            <span class="text-danger" asp-validation-for="MobileNo"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+      
+        <label class="col-sm-2 col-form-label" asp-for="Gender"></label>
+        <input type="radio" asp-for="Gender" value="M"/> <label>Male</label>
+        <input type="radio" asp-for="Gender" value="F"/> <label>Female</label>
+        <br/><br />
+        <span class="text-danger" asp-validation-for="Gender"></span>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </div>
+    </div>
+</form>

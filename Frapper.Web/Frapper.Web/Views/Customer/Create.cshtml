@@ -1,0 +1,145 @@
+﻿@model Frapper.ViewModel.Customers.CustomersViewModel
+@{
+    ViewBag.PageName = "Customer";
+    Layout = "_LayoutUser";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Add Customer</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form asp-controller="Customer" id="customerform" asp-antiforgery="true" asp-action="Create" method="post">
+            <div class="card-body register-card-body">
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" maxlength="100" oncopy="return false" , onpaste="return false" placeholder="Enter FirstName" class="form-control" />
+                        <span class="text-danger" asp-validation-for="FirstName"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" maxlength="100" oncopy="return false" , onpaste="return false" placeholder="Enter LastName" class="form-control" />
+                        <span class="text-danger" asp-validation-for="LastName"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="EmailId"></label>
+                        <input asp-for="EmailId" maxlength="100" oncopy="return false" , onpaste="return false" placeholder="Enter EmailId" class="form-control" />
+                        <span class="text-danger" asp-validation-for="EmailId"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="MobileNo"></label>
+                        <input asp-for="MobileNo" maxlength="10" oncopy="return false" , onpaste="return false" placeholder="Enter MobileNo" class="form-control" />
+                        <span class="text-danger" asp-validation-for="MobileNo"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label asp-for="LandlineNo"></label>
+                        <input asp-for="LandlineNo" maxlength="10" oncopy="return false" , onpaste="return false" placeholder="Enter LandlineNo" class="form-control" />
+                        <span class="text-danger" asp-validation-for="LandlineNo"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="State"></label>
+                        <input asp-for="State" maxlength="50" oncopy="return false" , onpaste="return false" placeholder="Enter State" class="form-control" />
+                        <span class="text-danger" asp-validation-for="State"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="City"></label>
+                        <input asp-for="City" maxlength="50" oncopy="return false" , onpaste="return false" placeholder="Enter City" class="form-control" />
+                        <span class="text-danger" asp-validation-for="City"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="Street"></label>
+                        <input asp-for="Street" maxlength="50" oncopy="return false" , onpaste="return false" placeholder="Enter Street" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Street"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label asp-for="Pincode"></label>
+                        <input asp-for="Pincode" maxlength="6" oncopy="return false" , onpaste="return false" placeholder="Enter Pincode" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Pincode"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="button" id="btnsubmit" class="btn btn-success">Save</button>
+                <a asp-area="" class="btn btn-danger" asp-controller="Customer" asp-action="Create">Clear</a>
+                <a asp-area="" class="btn btn-primary" asp-controller="Customer" asp-action="Index">List</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  
+
+    $(document).ready(function () {
+        $("#btnsubmit").click(function ()
+        {
+            var dataType = 'application/x-www-form-urlencoded; charset=utf-8';
+            var data = $('#customerform').serialize();
+
+            $.confirm({
+                title: "Confirmation",
+                type: "green",
+                content: "Do you Want to Submit this Form?",
+                buttons:
+                {
+                    confirm: function ()
+                    {
+                        if ($("#customerform").valid()) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Customer/Create",
+                                dataType: 'json',
+                                contentType: dataType,
+                                data: data,
+                                success: function (data, textStatus) {
+                                    if (data.Result == "success")
+                                    {
+                                        window.location.href = "/Customer/Index";
+                                    }
+                                    if (data.Result == "failed")
+                                    {
+                                        $.alert('Something Went Wrong Please Try After Sometime.');
+                                    }
+
+                                },
+                                error: function (xhr, status, err) {
+                                    if (xhr.status == 401) {
+                                        alert('Error');
+                                        window.location.href = "/Portal/Logout";
+                                    }
+
+                                    if (xhr.status == 500) {
+                                        alert('Error');
+                                        window.location.href = "/Portal/Logout";
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function() {
+                        $.alert("Submission canceled !");
+
+                    }
+                }
+            });
+
+
+        
+
+           
+        });
+
+
+    });
+</script>

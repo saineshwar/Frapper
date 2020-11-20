@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.PageName = "User";
+    Layout = "_LayoutUser";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Capture</h3>
+            </div>
+            <div class="card-body">
+                <div id="my_camera"></div>
+            </div>
+            <div class="card-footer">
+                <form>
+                    <input type="button" class="btn btn-success" value="Take Snapshot" onClick="take_snapshot()">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Set as Profile Photo</h3>
+            </div>
+            <div class="card-body">
+                <div id="results">Your captured image will appear here...</div>
+            </div>
+            <div class="card-footer">
+                <button id="btnupload" name="btnupload" class="btn btn-success">Set as Profile</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script src="~/js/webcamjs/webcam.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+
+    <!-- Configure a few settings and attach camera -->
+    <script language="JavaScript">
+        Webcam.set({
+            width: 400,
+            height: 300,
+            image_format: 'png'
+        });
+        Webcam.attach('#my_camera');
+
+        $(document).ready(function () {
+
+            $("#btnupload").hide();
+        });
+    </script>
+
+    <!-- Code to handle taking the snapshot and displaying it locally -->
+    <script language="JavaScript">
+        function take_snapshot() {
+            // take snapshot and get image data
+            Webcam.snap(function (dataUri) {
+                // display results in page
+                document.getElementById('results').innerHTML =
+                    '<img id="capturedid" src="' +
+                    dataUri +
+                    '"/>';
+
+                $.alert('Photo Captured');
+                $("#btnupload").show();
+                var basic = $('#capturedid').croppie
+                ({
+                    viewport: { width: 250, height: 250 },
+                    boundary: { width: 400, height: 300 },
+                    showZoomer: true
+
+                });
+
+                $('#capturedid').croppie('bind',
+                    {
+                        url: dataUri
+                    });
+
+
+                $('#btnupload').on('click',
+                    function () {
+                        basic.croppie('result', 'blob').then(function (blob) {
+                            var formData = new FormData();
+                            formData.append('filename', 'testFileName.png');
+                            formData.append('blob', blob);
+
+                            var myAppUrlSettings = {
+                                MyUsefulUrl: '@Url.Action("Capture", "UserProfile")'
+                            }
+
+                            if (blob != "") {
+                                var request = new XMLHttpRequest();
+                                request.open('POST', myAppUrlSettings.MyUsefulUrl);
+                                request.send(formData);
+
+                                request.onreadystatechange = function ()
+                                { // Call a function when the state changes.
+                                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+                                    {
+                                        window.location.href = "/UserProfile/MyProfile";
+                                    }
+                                }
+                            }
+                            else {
+                                $.alert('Unable to Set Photo try again once !');
+                            }
+
+                        });
+                    });
+
+
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        var basic = $('#capturedid').croppie
+            ({
+                viewport: { width: 320, height: 240 },
+                boundary: { width: 400, height: 300 },
+                showZoomer: true
+
+            });
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#capturedid').croppie('bind',
+                        {
+                            url: e.target.result
+                        });
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+}

@@ -1,0 +1,63 @@
+﻿@using Frapper.Web.Helpers
+@using Frapper.Repository.Menus.Queries
+@model List<Frapper.Entities.Menus.MenuCategory>
+@inject IMenuMasterQueries MenuMaster
+@inject ISubMenuMasterQueries SubMenu
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-header">PAGES</li>
+
+        @foreach (var menucategory in Model)
+        {
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>
+                        @menucategory.MenuCategoryName
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+
+                @if (MenuMaster != null && MenuMaster.GetMenuByRoleId(menucategory.RoleId, menucategory.MenuCategoryId).Any())
+                {
+                    <ul class="nav nav-treeview">
+
+                        @foreach (var menu in MenuMaster.GetMenuByRoleId(menucategory.RoleId, menucategory.MenuCategoryId))
+                        {
+
+                            if (!string.IsNullOrEmpty(menu.Area))
+                            {
+                                <li class="nav-item">
+                                    <a asp-area="@menu.Area" asp-controller="@menu.ControllerName" asp-action="@menu.ActionMethod" class="nav-link @Url.MakeActiveClass(menu.ControllerName, menu.ActionMethod)">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            @menu.MenuName
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="@menu.ControllerName" asp-action="@menu.ActionMethod" class="nav-link @Url.MakeActiveClass(menu.ControllerName, menu.ActionMethod)">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            @menu.MenuName
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+                            
+                        }
+
+                    </ul>
+                }
+            </li>
+        }
+
+
+
+
+    </ul>
+</nav>

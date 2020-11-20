@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frapper.Web", "Frapper.Web\Frapper.Web.csproj", "{0E1981BC-46CA-4AC9-8B20-014E78752891}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frapper.ViewModel", "Frapper.ViewModel\Frapper.ViewModel.csproj", "{210C59D4-5DBD-4D9C-8CAA-32D31E0E227A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frapper.Repository", "Frapper.Repository\Frapper.Repository.csproj", "{4E4DDFBF-1451-4AE8-8EA6-3E9ADCE5495C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frapper.Common", "Frapper.Common\Frapper.Common.csproj", "{56CEE20D-8090-4CA1-A356-CE35ACFE00D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frapper.Entities", "Frapper.Entities\Frapper.Entities.csproj", "{B8876B96-BE89-4FDB-80F8-2F9BFD80FDBD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82C865B9-E003-4A6D-B765-08C34E16ECBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frapper.Services", "Frapper.Services\Frapper.Services.csproj", "{CD88DE0F-C64A-4466-8133-A634820CF1C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E1981BC-46CA-4AC9-8B20-014E78752891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1981BC-46CA-4AC9-8B20-014E78752891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1981BC-46CA-4AC9-8B20-014E78752891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1981BC-46CA-4AC9-8B20-014E78752891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{210C59D4-5DBD-4D9C-8CAA-32D31E0E227A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{210C59D4-5DBD-4D9C-8CAA-32D31E0E227A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{210C59D4-5DBD-4D9C-8CAA-32D31E0E227A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{210C59D4-5DBD-4D9C-8CAA-32D31E0E227A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E4DDFBF-1451-4AE8-8EA6-3E9ADCE5495C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4DDFBF-1451-4AE8-8EA6-3E9ADCE5495C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4DDFBF-1451-4AE8-8EA6-3E9ADCE5495C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4DDFBF-1451-4AE8-8EA6-3E9ADCE5495C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56CEE20D-8090-4CA1-A356-CE35ACFE00D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56CEE20D-8090-4CA1-A356-CE35ACFE00D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56CEE20D-8090-4CA1-A356-CE35ACFE00D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56CEE20D-8090-4CA1-A356-CE35ACFE00D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8876B96-BE89-4FDB-80F8-2F9BFD80FDBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8876B96-BE89-4FDB-80F8-2F9BFD80FDBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8876B96-BE89-4FDB-80F8-2F9BFD80FDBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8876B96-BE89-4FDB-80F8-2F9BFD80FDBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD88DE0F-C64A-4466-8133-A634820CF1C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD88DE0F-C64A-4466-8133-A634820CF1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD88DE0F-C64A-4466-8133-A634820CF1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD88DE0F-C64A-4466-8133-A634820CF1C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABDDED16-FFFA-490B-B2C9-19A6E5C0337C}
+	EndGlobalSection
+EndGlobal

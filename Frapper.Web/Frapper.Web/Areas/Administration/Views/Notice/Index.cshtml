@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.PageName = "Notice";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+@await Html.PartialAsync("~/Views/Shared/_DatatablesCss.cshtml")
+
+<div class="col-md-12">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">All</h3>
+        </div>
+        <div class="card-body">
+            <table id="NoticeDataTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>NoticeId</th>
+                        <th>NoticeTitle</th>
+                        <th>NoticeStart</th>
+                        <th>NoticeEnd</th>
+                        <th>CreatedOn</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DatatablesScripts.cshtml")
+
+
+@section scripts{
+
+    <script src="~/plugins/moment/moment.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#NoticeDataTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": "/Administration/Notice/GridAllNotice",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [2],
+                        "orderable": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [3],
+                        "orderable": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [4],
+                        "orderable": false,
+                        "searchable": false
+                    }, {
+                        "targets": [5],
+                        "orderable": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [6],
+                        "orderable": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [7],
+                        "orderable": false,
+                        "searchable": false
+                    }
+                ],
+                "columns": [
+                    { "data": "NoticeId", "name": "NoticeId", "autoWidth": true },
+                    { "data": "NoticeTitle", "name": "NoticeTitle", "autoWidth": true },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return moment(full.NoticeStart).format("YYYY-MM-DD HH:mm:ss");
+                        }
+                    },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return moment(full.NoticeEnd).format("YYYY-MM-DD HH:mm:ss");
+                        }
+                    },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return moment(full.CreatedOn).format("YYYY-MM-DD HH:mm:ss");
+                        }
+                    },
+                    { "data": "Status", "name": "Status", "autoWidth": true },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return '<a class="btn btn-primary" href="/Administration/Notice/Edit/' + full.NoticeId + '"> Edit</a>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, full, meta)
+                        {
+                            return ' <button type="button" class="btn btn-danger" onclick="Delete(' + full.NoticeId + ');"> Active / InActive </button>';
+                        }
+                    }
+                ]
+            });
+
+
+
+        });
+
+        function Delete(noticeId) {
+            $.confirm({
+                title: 'Change Status!',
+                content: 'Do you want to Update Notice Status!',
+                buttons: {
+                    confirm: function () {
+                        $.ajax({
+                            url: "/Administration/Notice/DeleteNotice",
+                            type: "POST",
+                            data: { NoticeId: noticeId },
+                            success: function (data, textStatus, xhr) {
+                                if (data.Result == "success") {
+                                    location.reload();
+                                }
+                                if (data.Result == "failed") {
+                                    $.alert('Something Went Wrong');
+                                }
+                            },
+                            error: function (xhr, status, err) {
+                                if (xhr.status == 401) {
+                                    alert('Error');
+                                    window.location.href = "/Portal/Logout";
+                                }
+                                if (xhr.status == 500) {
+                                    alert('Error');
+                                    window.location.href = "/Portal/Logout";
+                                }
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    }
+                }
+            });
+        }
+
+
+    </script>
+
+
+}

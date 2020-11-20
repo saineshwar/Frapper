@@ -1,0 +1,193 @@
+﻿@using System.Web
+@model Frapper.ViewModel.Login.LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <link href="~/js/jqueryconfirm/dist/jquery-confirm.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
+</head>
+<body class="hold-transition login-page">
+    @if (TempData["TokenErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Message!</strong> @TempData["TokenErrorMessage"]
+        </div>
+    }
+
+    @if (TempData["TokenMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Message!</strong> @TempData["TokenMessage"]
+        </div>
+    }
+
+    @if (TempData["Reset_Success_Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Message!</strong> @TempData["Reset_Success_Message"]
+        </div>
+    }
+
+
+    <div class="login-box">
+        <div class="login-logo">
+            <img height="50px" src="~/img/Frapper.png" />
+            <b>Frapper</b>
+        </div>
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form id="account" asp-controller="Portal" asp-antiforgery="true" asp-action="Login" method="post">
+
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input asp-for="Username" class="form-control" placeholder="UserName" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input type="password" asp-for="Password" autocomplete="new-password" class="form-control" placeholder="Password" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <dnt-captcha asp-captcha-generator-max="999999"
+                                     asp-captcha-generator-min="111111"
+                                     asp-captcha-generator-language="English"
+                                     asp-captcha-generator-display-mode="ShowDigits"
+                                     asp-use-relative-urls="true"
+                                     asp-placeholder="Enter Security code"
+                                     asp-validation-error-message="Please enter the security code."
+                                     asp-font-name="Tahoma"
+                                     asp-font-size="20"
+                                     asp-fore-color="#333333"
+                                     asp-back-color="#ccc"
+                                     asp-text-box-class="text-box form-control"
+                                     asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                     asp-validation-message-class="text-danger"
+                                     asp-refresh-button-class="fas fa-redo btn-sm"
+                                     asp-use-noise="false" />
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" id="btnsubmit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <p class="mb-1">
+                    <a asp-controller="Portal" asp-action="ForgotPassword">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a asp-controller="Registration" class="text-center" asp-action="form">Register a new membership</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<div class="modal fade" id="modal-lg" data-keyboard="false" data-backdrop="static" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                 
+
+                    @if (ViewBag.NoticeTitle != null)
+                    {
+                        <button type="button" class="btn btn-success">
+                            @Html.Raw(ViewBag.NoticeTitle) <span class="badge badge-light"></span>
+                        </button>
+                       
+                    }
+                </h4>
+           
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalbody" class="modal-body text-center">
+                @if (ViewBag.NoticeTitle != null)
+                {
+                    @Html.Raw(ViewBag.Noticebody)
+                }
+            </div>
+            <div class="modal-footer justify-content-end">
+               <div class="badge badge-light">
+                 @ViewBag.NoticeCreatedOn @@Frapper
+               </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/adminlte.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/jquery.unobtrusive-ajax.js"></script>
+<script src="~/scripts/sha512.min.js"></script>
+<script src="~/js/jqueryconfirm/dist/jquery-confirm.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnsubmit").click(function () {
+            if ($('#Password').val() != "") {
+                var password = $('#Password').val();
+                var passwordhash = sha512(password);
+                $('#Password').val(passwordhash);
+            }
+            $("#loginform").submit();
+
+        });
+
+        if ('@ViewBag.NoticeTitle' != '')
+        {
+            $('#modal-lg').modal('show');
+        }
+       
+
+    });
+
+</script>
+
+
