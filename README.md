@@ -95,7 +95,7 @@ If you find project really helpful in Quick Learning do give it a star.
 ## How to configure and run
 * Clone code from Github: git clone https://github.com/saineshwar/Frapper
 * Open solution Frapper.Web.sln in Visual Studio 2019
-* Database Script is kept inside **Database_Script** folder outside Solution.
+* [Download Database Script](https://github.com/saineshwar/Frapper/blob/main/Frapper.Web/Database_Script/FrapperDB.sql)
 * Restore Database which is provided
 * Make Changes in ConnectionStrings, ApplicationSettings, Exceptional, RedisServer in appsettings.json file
 * Build project which will restore all NuGet Packages
