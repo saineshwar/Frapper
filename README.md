@@ -84,13 +84,13 @@ If you find project really helpful in Quick Learning do give it a star.
 * System.ComponentModel.Annotations
 
 ## Design Template
-* AdminLTE [https://github.com/ColorlibHQ/AdminLTE](AdminLTE)
+* [AdminLTE](https://github.com/ColorlibHQ/AdminLTE) 
 
 ## Front-end library
-* Daterangepicker [https://github.com/dangrossman/daterangepicker](daterangepicker)
-* jquery-confirm [https://craftpip.github.io/jquery-confirm/](jquery-confirm)
-* ckeditor [https://github.com/ckeditor/ckeditor4](ckeditor)
-* WebcamJS [https://github.com/jhuckaby/webcamjs](WebcamJS)
+* [Daterangepicker](https://github.com/dangrossman/daterangepicker) 
+* [jquery-confirm](https://craftpip.github.io/jquery-confirm/)
+* [ckeditor](https://github.com/ckeditor/ckeditor4)
+* [WebcamJS](https://github.com/jhuckaby/webcamjs)  
 
 ## How to configure and run
 * Clone code from Github: git clone https://github.com/saineshwar/Frapper
@@ -103,9 +103,9 @@ If you find project really helpful in Quick Learning do give it a star.
 
 ## Supporting Documentation
 
-* Project Overview [https://tutexchange.com/frapper-quick-guide-for-rapid-application-development-in-asp-net-core/](ProjectOverview)
-* SuperAdmin Screens [https://tutexchange.com/frapper-quick-guide-on-superadmin-module/](SuperAdmin-Screens)
-* User Screens [https://tutexchange.com/frapper-quick-guide-on-user-module/](User-Screens)
+* [Project Overview](https://tutexchange.com/frapper-quick-guide-for-rapid-application-development-in-asp-net-core/) 
+* [SuperAdmin Screens](https://tutexchange.com/frapper-quick-guide-on-superadmin-module/) 
+* [User Screens](https://tutexchange.com/frapper-quick-guide-on-user-module/) 
 
 ## Credential
 
@@ -123,11 +123,11 @@ width="200" data-canonical-src="https://cdn.buymeacoffee.com/buttons/default-ora
 
 ## About the Author
 **Saineshwar Bageri**
-* Blogs [https://tutexchange.com/](Blogs)
-* Facebook Page [https://www.facebook.com/CodewithSai](FacebookPage)
-* Facebook [https://www.facebook.com/saineshwar.bageri](Facebook)
-* Twitter [https://twitter.com/saihacksoft](Twitter)
-* Linkedin [https://www.linkedin.com/in/saineshwar-bageri-mvp-35200440](Linkedin)
+* [Blogs](https://tutexchange.com/)  
+* [Facebook Page](https://www.facebook.com/CodewithSai)  
+* [Facebook](https://www.facebook.com/saineshwar.bageri)  
+* [Twitter](https://twitter.com/saihacksoft)  
+* [Linkedin](https://www.linkedin.com/in/saineshwar-bageri-mvp-35200440)  
 
 ## License
 Released under the [MIT LICENSE](https://github.com/saineshwar/Frapper/blob/add-license-1/LICENSE)
