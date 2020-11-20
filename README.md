@@ -103,9 +103,9 @@ If you find project really helpful in Quick Learning do give it a star.
 
 ## Supporting Documentation
 
-Project Overview [https://tutexchange.com/frapper-quick-guide-for-rapid-application-development-in-asp-net-core/](ProjectOverview)
-SuperAdmin Screens [https://tutexchange.com/frapper-quick-guide-on-superadmin-module/](SuperAdmin-Screens)
-User Screens [https://tutexchange.com/frapper-quick-guide-on-user-module/](User-Screens)
+* Project Overview [https://tutexchange.com/frapper-quick-guide-for-rapid-application-development-in-asp-net-core/](ProjectOverview)
+* SuperAdmin Screens [https://tutexchange.com/frapper-quick-guide-on-superadmin-module/](SuperAdmin-Screens)
+* User Screens [https://tutexchange.com/frapper-quick-guide-on-user-module/](User-Screens)
 
 ## Credential
 
