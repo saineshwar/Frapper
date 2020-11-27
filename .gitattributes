@@ -1,2 +1,8 @@
+*.cs linguist-detectable=true
+*.js linguist-detectable=false
+*.html linguist-detectable=false
+*.xml linguist-detectable=false
+
+# Example of a `.gitattributes` file which reclassifies `.cs` files as C#:
 *.cs linguist-language=C#
 
