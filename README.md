@@ -6,6 +6,9 @@ Frapper is completed project template with all features which are commonly used 
 
 It Will help you learn and implement these features in Live Project's
 
+## Frapper API (New Projecr)
+Frapper API- Quick Guide for Rapid APIs Development in ASP.NET Core [Frapper.API](https://github.com/saineshwar/Frapper.API)  
+
 ![Welcome to Frapper](https://github.com/saineshwar/Frapper/blob/main/1frapper.png)
 
 ## Give a Star ⭐️
