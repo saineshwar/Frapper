@@ -2,9 +2,9 @@
 
 # Frapper- Quick Guide for Rapid Application Development in ASP.NET Core 
 
-Frapper is completed project template with all features which are commonly used in projects.
+Frapper is complete project template with all the features which are commonly used in projects.
 
-It Will help you learn and implement these features in Live Project's
+It will help you learn and implement these features in Live Projects.
 
 ## Frapper API (New Project)
 Frapper API- Quick Guide for Rapid APIs Development in ASP.NET Core [Frapper.API](https://github.com/saineshwar/Frapper.API)  
@@ -12,7 +12,7 @@ Frapper API- Quick Guide for Rapid APIs Development in ASP.NET Core [Frapper.API
 ![Welcome to Frapper](https://github.com/saineshwar/Frapper/blob/main/1frapper.png)
 
 ## Give a Star ⭐️
-If you find project really helpful in Quick Learning do give it a star. 
+If you find this project really helpful in Quick Learning, please do give it a star. 
 
 ## Support
 **⭐️ Support If Possible ⭐️** <a href="https://www.buymeacoffee.com/f8lkgf5" rel="nofollow"><img src="https://camo.githubusercontent.com/3ba8042b343d12b84b85d2e6563376af4150f9cd09e72428349c1656083c8b5a/68747470733a2f2f63646e2e6275796d6561636f666665652e636f6d2f627574746f6e732f64656661756c742d6f72616e67652e706e67" alt="Buy Me A Coffee" 
